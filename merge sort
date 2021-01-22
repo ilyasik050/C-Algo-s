@@ -1,0 +1,76 @@
+#pragma comment(linker, "/stack:200000000")
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2")
+
+#include <bits/stdc++.h>
+
+#define pb push_back
+#define ppb pop_back
+#define eb emplace_back
+#define mp make_pair
+#define fi first
+#define se second
+#define lb lower_bound
+#define ub upper_bound
+#define vi vector<int>
+
+typedef long long ll;
+typedef long double ld;
+
+const int sm = 3007;
+const int N = 1e5 + 7;
+const int mod = 1e9 + 7;
+const ll INF = 1e18;
+
+using namespace std;
+
+const int dX[4] = {1, 0, -1, 0};
+const int dY[4] = {0, 1, 0, -1};
+
+void merge_sort(vi &a, int l, int r){
+	if(l >= r){
+		return;
+	}
+	int mid = (l + r) / 2;
+	merge_sort(a, l, mid); // leva idem
+	merge_sort(a, mid + 1, r); // pravo idem
+	int i = l, j = mid + 1; // - nachalo leva i prava cootvetctvenno
+	vi coppy;// dop massiv
+	while(i <= mid || j <= r){
+		if(i <= mid && j <= r && a[i] > a[j]){
+			coppy.pb(a[j]);
+			j++;
+		} else if(i > mid){
+			coppy.pb(a[j]);
+			j++;
+		} else {
+			coppy.pb(a[i]);
+			i++;
+		}
+	}
+	i = l;
+	for(int x: coppy){
+		a[i] = x;
+		i++;
+	}
+}
+	
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cout.tie(nullptr);
+	vector<int> b;
+	int n;
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		int x;
+		cin >> x;
+		b.pb(x);
+	}
+	merge_sort(b, 0, n - 1);
+	for(int value: b){
+		cout << value << " ";
+	}
+	return 0;
+}
+	
